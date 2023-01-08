@@ -1,3 +1,3 @@
-# Multithreaded Linux Kernel Files
+# Welcome to `HardikHyperionOS`
 
-## Part of the OS Udemy Course
+## Contains Multithreaded Linux Kernel Files, Part of the OS Udemy Course
