@@ -1,7 +1,20 @@
-ORG 0x7c00
+ORG 0
 BITS 16
 
+; This is a simple boot sector that prints "Hello, World!" to the screen
+
+jmp 0x7c0:start     ; Jump to the start of the code
+
 start:
+    cli             ; Clear interrupts
+    mov ax, 0x7c0   ; Set the data segment to 0x7c0
+    mov ds, ax      ; Set the data segment to 0x7c0
+    mov es, ax      ; Set the extra segment to 0x7c0
+    mov ax, 0x00    ; Set the video mode to 0x00
+    mov ss, ax      ; Set the stack segment to 0x00
+    mov sp, 0x7c00  ; Set the stack pointer to 0x7c00
+    sti             ; Enables interrupts
+
     mov si, message ; Message to be displayed
     call print      ; Call the print function
     jmp $           ; Jump to the current address
@@ -16,7 +29,6 @@ print:
     jmp .loop       ; Jump to .loop
 .done:
     ret
-
 
 print_char:
     mov ah, 0eh     ; Function 0eh is for displaying a character
