@@ -9,19 +9,7 @@ _start:
 start:
     jmp 0x7c0:step2
 
-handle_zero:
-    mov ah, 0eh
-    mov al, 'A'
-    mov bx, 0x00
-    int 0x10
-    iret            ; Return from interrupt
 
-handle_one:
-    mov ah, 0eh
-    mov al, 'V'
-    mov bx, 0x00
-    int 0x10
-    iret            ; Return from interrupt
 
 step2:
     cli             ; Clear interrupts
@@ -33,16 +21,23 @@ step2:
     mov sp, 0x7c00  ; Set the stack pointer to 0x7c00
     sti             ; Enables interrupts
 
-    mov word[ss:0x00], handle_zero ; Set the interrupt handler
-    mov word[ss:0x02], 0x7c0
+    mov ah, 2       ; Function 2 is for reading a sector
+    mov al, 1       ; Read 1 sector
+    mov ch, 0       ; Head 0
+    mov cl, 2       ; Sector 2
+    mov dh, 0       ; Track 0
+    mov bx, buffer  ; Load the buffer address into bx
+    int 0x13        ; Interrupt 13h is for disk services
+    jc error        ; If the carry flag is set, jump to error
 
-    mov word[ss:0x04], handle_one
-    mov word[ss:0x06], 0x7c0
-
-    int 1
-
-    mov si, message ; Message to be displayed
+    mov si, buffer  ; Load the buffer address into si
     call print      ; Call the print function
+
+    jmp $
+
+error:
+    mov si, error_message
+    call print
     jmp $           ; Jump to the current address
 
 print:
@@ -61,7 +56,9 @@ print_char:
     int 0x10        ; Interrupt 10h is for video services
     ret
 
-message: db 'Hello, World!', 0 ; Message to be displayed
+error_message: db 'Failed to load sector', 0
 
 times 510-($-$$) db 0   ; Fill the rest of the sector with zeros
 dw 0xAA55               ; Boot sector signature
+
+buffer:
