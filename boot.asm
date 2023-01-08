@@ -9,6 +9,20 @@ _start:
 start:
     jmp 0x7c0:step2
 
+handle_zero:
+    mov ah, 0eh
+    mov al, 'A'
+    mov bx, 0x00
+    int 0x10
+    iret            ; Return from interrupt
+
+handle_one:
+    mov ah, 0eh
+    mov al, 'V'
+    mov bx, 0x00
+    int 0x10
+    iret            ; Return from interrupt
+
 step2:
     cli             ; Clear interrupts
     mov ax, 0x7c0   ; Set the data segment to 0x7c0
@@ -18,6 +32,14 @@ step2:
     mov ss, ax      ; Set the stack segment to 0x00
     mov sp, 0x7c00  ; Set the stack pointer to 0x7c00
     sti             ; Enables interrupts
+
+    mov word[ss:0x00], handle_zero ; Set the interrupt handler
+    mov word[ss:0x02], 0x7c0
+
+    mov word[ss:0x04], handle_one
+    mov word[ss:0x06], 0x7c0
+
+    int 1
 
     mov si, message ; Message to be displayed
     call print      ; Call the print function
