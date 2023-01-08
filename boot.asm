@@ -1,11 +1,15 @@
 ORG 0
 BITS 16
+_start:
+    jmp short start
+    nop
 
-; This is a simple boot sector that prints "Hello, World!" to the screen
-
-jmp 0x7c0:start     ; Jump to the start of the code
+ times 33 db 0 ; 33 bytes of zeros
 
 start:
+    jmp 0x7c0:step2
+
+step2:
     cli             ; Clear interrupts
     mov ax, 0x7c0   ; Set the data segment to 0x7c0
     mov ds, ax      ; Set the data segment to 0x7c0
