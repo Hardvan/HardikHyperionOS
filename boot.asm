@@ -1,5 +1,9 @@
-ORG 0
+ORG 0x7c00
 BITS 16
+
+CODE_SEG equ gdt_code - gdt_start
+DATA_SEG equ gdt_data - gdt_start
+
 _start:
     jmp short start
     nop
@@ -7,58 +11,69 @@ _start:
  times 33 db 0 ; 33 bytes of zeros
 
 start:
-    jmp 0x7c0:step2
-
-
+    jmp 0:step2
 
 step2:
     cli             ; Clear interrupts
-    mov ax, 0x7c0   ; Set the data segment to 0x7c0
+    mov ax, 0x00    ; Set the data segment to 0x7c0
     mov ds, ax      ; Set the data segment to 0x7c0
     mov es, ax      ; Set the extra segment to 0x7c0
-    mov ax, 0x00    ; Set the video mode to 0x00
     mov ss, ax      ; Set the stack segment to 0x00
     mov sp, 0x7c00  ; Set the stack pointer to 0x7c00
     sti             ; Enables interrupts
 
-    mov ah, 2       ; Function 2 is for reading a sector
-    mov al, 1       ; Read 1 sector
-    mov ch, 0       ; Head 0
-    mov cl, 2       ; Sector 2
-    mov dh, 0       ; Track 0
-    mov bx, buffer  ; Load the buffer address into bx
-    int 0x13        ; Interrupt 13h is for disk services
-    jc error        ; If the carry flag is set, jump to error
+.load_protected:
+    cli
+    lgdt[gdt_descriptor]
+    mov eax, cr0
+    or eax, 0x1
+    mov cr0, eax
+    jmp CODE_SEG:load32
 
-    mov si, buffer  ; Load the buffer address into si
-    call print      ; Call the print function
+; GDT
+gdt_start:
+gdt_null:
+    dd 0x0
+    dd 0x0
+
+; offset 0x8
+gdt_code:           ; Code Segement should point to this
+    dw 0xffff       ; Segment Limit first 0-15 bits
+    dw 0            ; Base Address first 0-15 bits
+    db 0            ; Base Address 16-23 bits
+    db 0x9a         ; Access Byte
+    db 11001111b    ; Granularity Byte
+    db 0            ; Base Address 24-31 bits
+
+; offset 0x10
+gdt_data:           ; Data Segement should point to this
+    dw 0xffff       ; Segment Limit first 0-15 bits
+    dw 0            ; Base Address first 0-15 bits
+    db 0            ; Base Address 16-23 bits
+    db 0x92         ; Access Byte
+    db 11001111b    ; Granularity Byte
+    db 0            ; Base Address 24-31 bits
+
+gdt_end:
+
+gdt_descriptor:
+    dw gdt_end - gdt_start - 1
+    dd gdt_start
+
+[BITS 32]
+load32:
+    mov ax, DATA_SEG
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    mov ss, ax
+    mov ebp, 0x00200000
+    mov esp, ebp
 
     jmp $
 
-error:
-    mov si, error_message
-    call print
-    jmp $           ; Jump to the current address
-
-print:
-    mov bx, 0       ; Position of the character
-.loop:
-    lodsb           ; Load the next character into al
-    cmp al, 0       ; Compare it with 0
-    je .done        ; If it is 0, jump to .done
-    call print_char ; Otherwise, print the character
-    jmp .loop       ; Jump to .loop
-.done:
-    ret
-
-print_char:
-    mov ah, 0eh     ; Function 0eh is for displaying a character
-    int 0x10        ; Interrupt 10h is for video services
-    ret
-
-error_message: db 'Failed to load sector', 0
 
 times 510-($-$$) db 0   ; Fill the rest of the sector with zeros
 dw 0xAA55               ; Boot sector signature
 
-buffer:
