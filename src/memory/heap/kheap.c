@@ -2,6 +2,7 @@
 #include "heap.h"
 #include "config.h"
 #include "kernel.h"
+#include "memory/memory.h"
 
 struct heap kernel_heap;
 
@@ -22,9 +23,23 @@ void kheap_init()
     }
 }
 
+// Allocates a block of memory
 void *kmalloc(size_t size)
 {
     return heap_malloc(&kernel_heap, size);
+}
+
+// Allocates a block of memory and sets it to 0x00
+void *kzalloc(size_t size)
+{
+    void *ptr = kmalloc(size);
+    if (ptr == NULL)
+    {
+        return 0;
+    }
+    memset(ptr, 0x00, size);
+
+    return ptr;
 }
 
 void kfree(void *ptr)
