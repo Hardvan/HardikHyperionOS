@@ -15,11 +15,13 @@ uint16_t terminal_make_char(char c, char color)
     return (color << 8) | c;
 }
 
+// Takes a character and a color and puts it on the screen
 void terminal_putchar(int x, int y, char c, char color)
 {
     video_memory[y * VGA_WIDTH + x] = terminal_make_char(c, color);
 }
 
+// Takes a character and a color and puts it on the screen
 void terminal_writechar(char c, char color)
 {
     if (c == '\n')
@@ -38,6 +40,7 @@ void terminal_writechar(char c, char color)
     }
 }
 
+// Clears the screen
 void terminal_initialize()
 {
     video_memory = (uint16_t *)(0xB8000);
@@ -52,6 +55,7 @@ void terminal_initialize()
     }
 }
 
+// Returns the length of a string
 size_t strlen(const char *str)
 {
     size_t len = 0;
@@ -64,6 +68,7 @@ size_t strlen(const char *str)
     return len;
 }
 
+// Prints a string
 void print(const char *str)
 {
     size_t len = strlen(str);
@@ -73,6 +78,7 @@ void print(const char *str)
     }
 }
 
+// The kernel main function
 void kernel_main()
 {
     terminal_initialize();
@@ -84,4 +90,7 @@ void kernel_main()
 
     // Initialize the IDT
     idt_init();
+
+    // Enable interrupts
+    enable_interrupts();
 }
