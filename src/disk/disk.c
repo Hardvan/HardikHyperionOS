@@ -1,5 +1,12 @@
+#include "disk.h"
 #include "io/io.h"
+#include "memory/memory.h"
+#include "status.h"
+#include "config.h"
 
+struct disk disk;
+
+// Read a sector from the disk
 int disk_read_sector(int lba, int total, void *buf)
 {
     outb(0x1F6, (lba >> 24) | 0xE0);
@@ -28,4 +35,32 @@ int disk_read_sector(int lba, int total, void *buf)
     }
 
     return 0;
+}
+
+// Initialize the disk
+void disk_search_and_init()
+{
+    memset(&disk, 0, sizeof(disk));
+    disk.type = HARDIKHYPERIONOS_DISK_TYPE_REAL;
+    disk.sector_size = HARDIKHYPERIONOS_SECTOR_SIZE;
+}
+
+// Get a disk by index
+struct disk *disk_get(int index)
+{
+    if (index != 0)
+        return 0;
+
+    return &disk;
+}
+
+// Read a block from the disk
+int disk_read_block(struct disk *idisk, unsigned int lba, int total, void *buf)
+{
+    if (idisk != &disk)
+    {
+        return -EIO;
+    }
+
+    return disk_read_sector(lba, total, buf);
 }
