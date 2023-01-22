@@ -37,3 +37,19 @@ int tonumericdigit(char c)
 {
     return c - '0';
 }
+
+// Copies a string from src to dest
+char *strcpy(char *dest, const char *src)
+{
+    char *res = dest;
+    while (*src != '\0')
+    {
+        *dest = *src;
+        dest++;
+        src++;
+    }
+
+    *dest = '\0';
+
+    return res;
+}

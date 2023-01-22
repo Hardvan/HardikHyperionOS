@@ -3,6 +3,9 @@
     "*.ejs": "html",
     "kernel.h": "c",
     "stddef.h": "c",
-    "config.h": "c"
+    "config.h": "c",
+    "stdio.h": "c",
+    "fat16.h": "c",
+    "string.h": "c"
   }
 }

@@ -9,6 +9,7 @@
 #include "fs/pparser.h"
 #include "string/string.h"
 #include "disk/streamer.h"
+#include "fs/file.h"
 
 uint16_t *video_memory = 0;
 uint16_t terminal_row = 0;
@@ -75,12 +76,15 @@ static struct paging_4gb_chunk *kernel_chunk = 0;
 // The kernel main function
 void kernel_main()
 {
+    // Initialize the terminal
     terminal_initialize();
-
     print("Hello, World!\nThis is written in C!");
 
     // Initialize the heap
     kheap_init();
+
+    // Initialize the filesystems
+    fs_init();
 
     // Search and initialize the disks
     disk_search_and_init();
