@@ -6,6 +6,7 @@
     "config.h": "c",
     "stdio.h": "c",
     "fat16.h": "c",
-    "string.h": "c"
+    "string.h": "c",
+    "paging.h": "c"
   }
 }
