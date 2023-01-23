@@ -104,10 +104,16 @@ void kernel_main()
     // Enable interrupts
     enable_interrupts();
 
-    struct disk_stream *stream = diskstreamer_new(0);
-    diskstreamer_seek(stream, 0x201);
-    unsigned char c = 0;
-    diskstreamer_read(stream, &c, 1);
+    int fd = fopen("0:/hello.txt", "r");
+    if (fd)
+    {
+        print("hello.txt opened successfully!\n");
+    }
+    int fd2 = fopen("0:/hello2.txt", "r");
+    if (fd2)
+    {
+        print("hello2.txt opened successfully!\n");
+    }
     while (1)
     {
     }
