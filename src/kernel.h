@@ -9,4 +9,8 @@
 void kernel_main();
 void print(const char *str);
 
+#define ERROR(value) (void *)(value)
+#define ERROR_I(value) (int)(value)
+#define IS_ERR(value) ((int)value < 0)
+
 #endif
