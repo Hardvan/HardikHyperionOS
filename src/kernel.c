@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include "idt/idt.h"
 #include "io/io.h"
+#include "memory/memory.h"
 #include "memory/heap/kheap.h"
 #include "memory/paging/paging.h"
 #include "disk/disk.h"
@@ -10,6 +11,8 @@
 #include "string/string.h"
 #include "disk/streamer.h"
 #include "fs/file.h"
+#include "gdt/gdt.h"
+#include "config.h"
 
 uint16_t *video_memory = 0;
 uint16_t terminal_row = 0;
@@ -81,12 +84,26 @@ void panic(const char *msg)
     }
 }
 
+struct gdt gdt_real[HARDIKHYPERIONOS_TOTAL_GDT_SEGMENTS];
+struct gdt_structured gdt_structured[HARDIKHYPERIONOS_TOTAL_GDT_SEGMENTS] = {
+    {.base = 0x00, .limit = 0x00, .type = 0x00},       // Null Segment
+    {.base = 0x00, .limit = 0xffffffff, .type = 0x9a}, // Kernel code segment
+    {.base = 0x00, .limit = 0xffffffff, .type = 0x92}, // Kernel data segment
+};
+
 // The kernel main function
 void kernel_main()
 {
     // Initialize the terminal
     terminal_initialize();
     print("Hello, World!\nThis is written in C!");
+
+    // Initialize the GDT
+    memset(gdt_real, 0x00, sizeof(gdt_real));
+    gdt_structured_to_gdt(gdt_real, gdt_structured, HARDIKHYPERIONOS_TOTAL_GDT_SEGMENTS);
+
+    // Load the GDT
+    gdt_load(gdt_real, sizeof(gdt_real));
 
     // Initialize the heap
     kheap_init();
