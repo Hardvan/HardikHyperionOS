@@ -12,5 +12,6 @@ void hardikhyperionos_free(void *ptr);
 void hardikhyperionos_putchar(char c);
 int hardikhyperionos_getkeyblock();
 void hardikhyperionos_terminal_readline(char *out, int max, bool output_while_typing);
+void hardikhyperionos_process_load_start(const char *filename);
 
 #endif
