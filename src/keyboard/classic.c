@@ -1,6 +1,10 @@
 #include "classic.h"
 #include "keyboard.h"
 #include "io/io.h"
+#include "kernel.h"
+#include "idt/idt.h"
+#include "task/task.h"
+
 #include <stdint.h>
 #include <stddef.h>
 
@@ -24,8 +28,12 @@ struct keyboard classic_keyboard = {
     .name = {"Classic"},
     .init = classic_keyboard_init};
 
+void classic_keyboard_handle_interrupt();
+
 int classic_keyboard_init()
 {
+    idt_register_interrupt_callback(ISR_KEYBOARD_INTERRUPT, classic_keyboard_handle_interrupt);
+
     outb(PS2_PORT, PS2_COMMAND_ENABLE_FIRST_PORT);
 
     return 0;
@@ -44,8 +52,25 @@ uint8_t classic_keyboard_scancode_to_char(uint8_t scancode)
     return c;
 }
 
-void clasic_keyboard_handle_interrupt()
+void classic_keyboard_handle_interrupt()
 {
+    kernel_page();
+    uint8_t scancode = 0;
+    scancode = insb(KEYBOARD_INPUT_PORT);
+    insb(KEYBOARD_INPUT_PORT);
+
+    if (scancode & CLASSIC_KEYBOARD_KEY_RELEASED)
+    {
+        return;
+    }
+
+    uint8_t c = classic_keyboard_scancode_to_char(scancode);
+    if (c != 0)
+    {
+        keyboard_push(c);
+    }
+
+    task_page();
 }
 
 struct keyboard *classic_init()
