@@ -8,6 +8,8 @@
 struct idt_desc idt_descriptors[HARDIKHYPERIONOS_TOTAL_INTERRUPTS];
 struct idtr_desc idtr_descriptor;
 
+extern void *interrupt_pointer_table[HARDIKHYPERIONOS_TOTAL_INTERRUPTS];
+
 static ISR80H_COMMAND isr80h_commands[HARDIKHYPERIONOS_MAX_ISR80H_COMMANDS];
 
 extern void idt_load(struct idtr_desc *ptr);
@@ -15,26 +17,25 @@ extern void int21h();
 extern void no_interrupt();
 extern void isr80h_wrapper();
 
-void int21h_handler()
+void no_interrupt_handler()
 {
-    print("Keyboard pressed!\n");
     outb(0x20, 0x20);
 }
 
-void no_interrupt_handler()
+void interrupt_handler(int interrupt, struct interrupt_frame *frame)
 {
     outb(0x20, 0x20);
 }
 
 void idt_zero()
 {
-    print("Divide by zero error.\n");
+    print("Divide by zero error\n");
 }
 
 void idt_set(int interrupt_no, void *address)
 {
     struct idt_desc *desc = &idt_descriptors[interrupt_no];
-    desc->offset_1 = (uint32_t)address & 0x0000FFFF;
+    desc->offset_1 = (uint32_t)address & 0x0000ffff;
     desc->selector = KERNEL_CODE_SELECTOR;
     desc->zero = 0x00;
     desc->type_attr = 0xEE;
@@ -49,15 +50,16 @@ void idt_init()
 
     for (int i = 0; i < HARDIKHYPERIONOS_TOTAL_INTERRUPTS; i++)
     {
-        idt_set(i, no_interrupt);
+        idt_set(i, interrupt_pointer_table[i]);
     }
+
     idt_set(0, idt_zero);
-    idt_set(0x21, int21h);
     idt_set(0x80, isr80h_wrapper);
 
     // Load the interrupt descriptor table
     idt_load(&idtr_descriptor);
 }
+
 void isr80h_register_command(int command_id, ISR80H_COMMAND command)
 {
     if (command_id < 0 || command_id >= HARDIKHYPERIONOS_MAX_ISR80H_COMMANDS)
@@ -90,6 +92,7 @@ void *isr80h_handle_command(int command, struct interrupt_frame *frame)
     }
 
     result = command_func(frame);
+
     return result;
 }
 
@@ -100,5 +103,6 @@ void *isr80h_handler(int command, struct interrupt_frame *frame)
     task_current_save_state(frame);
     res = isr80h_handle_command(command, frame);
     task_page();
+
     return res;
 }
