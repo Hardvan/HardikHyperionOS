@@ -28,4 +28,7 @@ void hardikhyperionos_process_load_start(const char *filename);
 struct command_argument *hardikhyperionos_parse_command(const char *command, int max);
 void hardikhyperionos_process_get_arguments(struct process_arguments *arguments);
 
+int hardikhyperionos_system(struct command_argument *arguments);
+int hardikhyperionos_system_run(const char *command);
+
 #endif
