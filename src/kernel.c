@@ -111,7 +111,8 @@ void kernel_main()
 {
     // Initialize the terminal
     terminal_initialize();
-    print("Hello, World!\nThis is written in C!");
+
+    // print("Hello, World!\nThis is written in C!");
 
     // Initialize the GDT
     memset(gdt_real, 0x00, sizeof(gdt_real));
