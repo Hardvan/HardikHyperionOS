@@ -30,5 +30,6 @@ void hardikhyperionos_process_get_arguments(struct process_arguments *arguments)
 
 int hardikhyperionos_system(struct command_argument *arguments);
 int hardikhyperionos_system_run(const char *command);
+void hardikhyperionos_exit();
 
 #endif
