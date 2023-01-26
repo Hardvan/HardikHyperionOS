@@ -10,6 +10,7 @@
     "paging.h": "c",
     "status.h": "c",
     "cstdio": "c",
-    "kheap.h": "c"
+    "kheap.h": "c",
+    "task.h": "c"
   }
 }

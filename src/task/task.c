@@ -39,6 +39,7 @@ struct task *task_new(struct process *process)
     {
         task_head = task;
         task_tail = task;
+        current_task = task;
         goto out;
     }
 
@@ -137,6 +138,7 @@ int task_init(struct task *task, struct process *process)
 
     task->registers.ip = HARDIKHYPERION_OS_VIRTUAL_ADDRESS;
     task->registers.ss = USER_DATA_SEGMENT;
+    task->registers.cs = USER_CODE_SEGMENT;
     task->registers.esp = HARDIKHYPERIONOS_PROGRAM_VIRTUAL_STACK_ADDRESS_START;
 
     task->process = process;
