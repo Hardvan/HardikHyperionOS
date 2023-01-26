@@ -6,6 +6,11 @@ int main(int argc, char **argv)
 
     while (1)
     {
+        if (getkey() != 0)
+        {
+            print("key was pressed\n");
+        }
     }
+
     return 0;
 }
