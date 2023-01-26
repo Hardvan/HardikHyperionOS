@@ -1,4 +1,4 @@
-FILES=./build/start.o
+FILES=./build/start.o ./build/hardikhyperionos.o
 INCLUDES=
 
 all: ${FILES}
@@ -6,6 +6,9 @@ all: ${FILES}
 
 ./build/start.o: ./src/start.asm
 	nasm -f elf ./src/start.asm -o ./build/start.o
+
+./build/hardikhyperionos.o: ./src/hardikhyperionos.asm
+	nasm -f elf ./src/hardikhyperionos.asm -o ./build/hardikhyperionos.o
 
 clean:
 	rm -rf ${FILES}
