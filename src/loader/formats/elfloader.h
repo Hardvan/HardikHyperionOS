@@ -9,7 +9,7 @@
 
 struct elf_file
 {
-    char filename[PEACHOS_MAX_PATH];
+    char filename[HARDIKHYPERIONOS_MAX_PATH];
 
     int in_memory_size;
 
@@ -41,5 +41,9 @@ struct elf_file
 
 int elf_load(const char *filename, struct elf_file **file_out);
 void elf_close(struct elf_file *file);
+void *elf_virtual_base(struct elf_file *file);
+void *elf_virtual_end(struct elf_file *file);
+void *elf_phys_base(struct elf_file *file);
+void *elf_phys_end(struct elf_file *file);
 
 #endif

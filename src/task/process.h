@@ -5,6 +5,11 @@
 #include "config.h"
 #include "task.h"
 
+#define PROCESS_FILETYPE_ELF 0
+#define PROCESS_FILETYPE_BINARY 1
+
+typedef unsigned char PROCESS_FILETYPE;
+
 struct process
 {
     // Process ID
@@ -18,8 +23,14 @@ struct process
     // The memory (malloc) allocatins
     void *allocations[HARDIKHYPERIONOS_MAX_PROGRAM_ALLOCATIONS];
 
-    // Physical Pointer to the process memory
-    void *ptr;
+    PROCESS_FILETYPE filetype;
+
+    union
+    {
+        // The physical pointer to the process memory.
+        void *ptr;
+        struct elf_file *elf_file;
+    };
 
     // Physical Pointer to the stack memory
     void *stack;
