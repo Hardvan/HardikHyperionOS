@@ -7,6 +7,8 @@
     "stdio.h": "c",
     "fat16.h": "c",
     "string.h": "c",
-    "paging.h": "c"
+    "paging.h": "c",
+    "status.h": "c",
+    "cstdio": "c"
   }
 }
