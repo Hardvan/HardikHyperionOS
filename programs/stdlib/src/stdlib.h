@@ -1,5 +1,5 @@
-#ifndef STDLIB_H
-#define STDLIB_H
+#ifndef HARDIKHYPERIONOS_STDLIB_H
+#define HARDIKHYPERIONOS_STDLIB_H
 
 #include <stddef.h>
 

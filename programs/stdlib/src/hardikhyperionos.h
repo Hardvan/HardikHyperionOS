@@ -7,5 +7,6 @@ void print(const char *filename);
 int getkey();
 void *hardikhyperionos_malloc(size_t size);
 void hardikhyperionos_free(void *ptr);
+void hardikhyperionos_putchar(char c);
 
 #endif

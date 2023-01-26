@@ -6,6 +6,7 @@ global print:function
 global getkey:function
 global hardikhyperionos_malloc:function
 global hardikhyperionos_free:function
+global hardikhyperionos_putchar:function
 
 ; void print(const char* filename)
 print:
@@ -24,6 +25,17 @@ getkey:
     mov ebp, esp
     mov eax, 2 ; Command getkey
     int 0x80
+    pop ebp
+    ret
+
+; void hardikhyperionos_putchar(char c)
+hardikhyperionos_putchar:
+    push ebp
+    mov ebp, esp
+    mov eax, 3 ; Command putchar
+    push dword [ebp+8] ; Variable "c"
+    int 0x80
+    add esp, 4
     pop ebp
     ret
 
