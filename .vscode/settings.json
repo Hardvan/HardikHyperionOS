@@ -12,6 +12,7 @@
     "cstdio": "c",
     "kheap.h": "c",
     "task.h": "c",
-    "stdlib.h": "c"
+    "stdlib.h": "c",
+    "hardikhyperionos.h": "c"
   }
 }

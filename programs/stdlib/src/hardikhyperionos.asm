@@ -3,7 +3,7 @@
 section .asm
 
 global print:function
-global getkey:function
+global hardikhyperionos_getkey:function
 global hardikhyperionos_malloc:function
 global hardikhyperionos_free:function
 global hardikhyperionos_putchar:function
@@ -19,8 +19,8 @@ print:
     pop ebp
     ret
 
-; int getkey()
-getkey:
+; int hardikhyperionos_getkey()
+hardikhyperionos_getkey:
     push ebp
     mov ebp, esp
     mov eax, 2 ; Command getkey
