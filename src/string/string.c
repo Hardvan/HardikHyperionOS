@@ -76,6 +76,22 @@ char *strcpy(char *dest, const char *src)
     return res;
 }
 
+char *strncpy(char *dest, const char *src, int count)
+{
+    int i;
+    for (i = 0; i < count - 1; i++)
+    {
+        if (src[i] == 0x00)
+            break;
+
+        dest[i] = src[i];
+    }
+
+    dest[i] = 0x00;
+
+    return dest;
+}
+
 int strncmp(const char *str1, const char *str2, int n)
 {
     unsigned char u1, u2;
