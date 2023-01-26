@@ -8,4 +8,5 @@ void *malloc(size_t size)
 
 void free(void *ptr)
 {
+    hardikhyperionos_free(ptr);
 }
