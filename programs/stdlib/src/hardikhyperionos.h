@@ -10,6 +10,12 @@ struct command_argument
     struct command_argument *next;
 };
 
+struct process_arguments
+{
+    int argc;
+    char **argv;
+};
+
 void print(const char *filename);
 int hardikhyperionos_getkey();
 
@@ -20,5 +26,6 @@ int hardikhyperionos_getkeyblock();
 void hardikhyperionos_terminal_readline(char *out, int max, bool output_while_typing);
 void hardikhyperionos_process_load_start(const char *filename);
 struct command_argument *hardikhyperionos_parse_command(const char *command, int max);
+void hardikhyperionos_process_get_arguments(struct process_arguments *arguments);
 
 #endif

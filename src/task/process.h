@@ -17,6 +17,18 @@ struct process_allocation
     size_t size;
 };
 
+struct command_argument
+{
+    char argument[512];
+    struct command_argument *next;
+};
+
+struct process_arguments
+{
+    int argc;
+    char **argv;
+};
+
 struct process
 {
     // Process ID
@@ -51,6 +63,9 @@ struct process
         int tail;
         int head;
     } keyboard;
+
+    // The arguments of the process.
+    struct process_arguments arguments;
 };
 
 int process_switch(struct process *process);
@@ -61,5 +76,8 @@ struct process *process_current();
 struct process *process_get(int process_id);
 void *process_malloc(struct process *process, size_t size);
 void process_free(struct process *process, void *ptr);
+
+void process_get_arguments(struct process *process, int *argc, char ***argv);
+int process_inject_arguments(struct process *process, struct command_argument *root_argument);
 
 #endif
