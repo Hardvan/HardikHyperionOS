@@ -2,7 +2,7 @@
 
 global print:function
 global getkey:function
-global peachos_malloc:function
+global hardikhyperionos_malloc:function
 
 ; void print(const char* filename)
 print:
@@ -24,8 +24,8 @@ getkey:
     pop ebp
     ret
 
-; void* peachos_malloc(size_t size)
-peachos_malloc:
+; void* hardikhyperionos_malloc(size_t size)
+hardikhyperionos_malloc:
     push ebp
     mov ebp, esp
     mov eax, 4 ; Command malloc (Allocates memory for the process)

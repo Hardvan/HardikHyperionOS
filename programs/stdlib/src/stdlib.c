@@ -3,7 +3,7 @@
 
 void *malloc(size_t size)
 {
-    return peachos_malloc(size);
+    return hardikhyperionos_malloc(size);
 }
 
 void free(void *ptr)
