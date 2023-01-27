@@ -1,5 +1,6 @@
 #include "memory.h"
 
+// Set memory
 void *memset(void *ptr, int c, size_t size)
 {
     char *c_ptr = (char *)ptr;
@@ -11,6 +12,7 @@ void *memset(void *ptr, int c, size_t size)
     return ptr;
 }
 
+// Compare memory
 int memcmp(void *s1, void *s2, int count)
 {
     char *c1 = s1;
@@ -26,6 +28,7 @@ int memcmp(void *s1, void *s2, int count)
     return 0;
 }
 
+// Copy memory
 void *memcpy(void *dest, void *src, int len)
 {
     char *d = dest;

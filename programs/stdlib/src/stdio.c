@@ -3,6 +3,7 @@
 #include "stdlib.h"
 #include <stdarg.h>
 
+// Display a character on the screen
 int putchar(int c)
 {
     hardikhyperionos_putchar((char)c);
@@ -10,14 +11,16 @@ int putchar(int c)
     return 0;
 }
 
+// Print a formatted string
 int printf(const char *fmt, ...)
 {
-    va_list ap;
-    const char *p;
-    char *sval;
-    int ival;
+    // va: Variable argument
+    va_list ap;    // Argument pointer
+    const char *p; // Pointer to the format string
+    char *sval;    // String value
+    int ival;      // Integer value
 
-    va_start(ap, fmt);
+    va_start(ap, fmt); // Initialize the argument pointer
     for (p = fmt; *p; p++)
     {
         if (*p != '%')

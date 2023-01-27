@@ -40,11 +40,13 @@ void interrupt_handler(int interrupt, struct interrupt_frame *frame)
     outb(0x20, 0x20);
 }
 
+// Divide by zero interrupt
 void idt_zero()
 {
     print("Divide by zero error\n");
 }
 
+// Set the address of the interrupt
 void idt_set(int interrupt_no, void *address)
 {
     struct idt_desc *desc = &idt_descriptors[interrupt_no];
@@ -55,6 +57,7 @@ void idt_set(int interrupt_no, void *address)
     desc->offset_2 = (uint32_t)address >> 16;
 }
 
+// Handle exceptions
 void idt_handle_exception()
 {
     process_terminate(task_current()->process);
@@ -69,6 +72,7 @@ void idt_clock()
     task_next();
 }
 
+// Initialize the interrupt descriptor table
 void idt_init()
 {
     memset(idt_descriptors, 0, sizeof(idt_descriptors));

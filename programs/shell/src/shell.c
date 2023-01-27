@@ -7,13 +7,14 @@ int main(int argc, char **argv)
 {
     print("HardikHyperionOS v1.0.0\n");
 
+    // Run the shell
     while (1)
     {
         print("> ");
         char buf[1024];
         hardikhyperionos_terminal_readline(buf, sizeof(buf), true);
         print("\n");
-        hardikhyperionos_system_run(buf);
+        hardikhyperionos_system_run(buf); // Run the command
 
         print("\n");
     }

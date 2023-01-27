@@ -1,6 +1,7 @@
 #include "hardikhyperionos.h"
 #include "string.h"
 
+// Parse the command into a linked list of arguments
 struct command_argument *hardikhyperionos_parse_command(const char *command, int max)
 {
     struct command_argument *root_command = 0;
@@ -47,6 +48,7 @@ out:
     return root_command;
 }
 
+// Block until a key is pressed
 int hardikhyperionos_getkeyblock()
 {
     int val = 0;
@@ -57,6 +59,7 @@ int hardikhyperionos_getkeyblock()
     return val;
 }
 
+// Read a line from the terminal
 void hardikhyperionos_terminal_readline(char *out, int max, bool output_while_typing)
 {
     int i = 0;
@@ -91,6 +94,7 @@ void hardikhyperionos_terminal_readline(char *out, int max, bool output_while_ty
     out[i] = 0x00;
 }
 
+// Run a command
 int hardikhyperionos_system_run(const char *command)
 {
     char buf[1024];

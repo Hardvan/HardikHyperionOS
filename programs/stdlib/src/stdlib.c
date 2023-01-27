@@ -30,11 +30,13 @@ char *itoa(int i)
     return &text[loc];
 }
 
+// Allocate memory
 void *malloc(size_t size)
 {
     return hardikhyperionos_malloc(size);
 }
 
+// Free memory
 void free(void *ptr)
 {
     hardikhyperionos_free(ptr);

@@ -90,6 +90,7 @@ struct path_part *pathparser_parse_path_part(struct path_part *last_part, const 
     return part;
 }
 
+// Free a path
 void pathparser_free(struct path_root *root)
 {
     struct path_part *part = root->first;
@@ -104,6 +105,7 @@ void pathparser_free(struct path_root *root)
     kfree(root);
 }
 
+// Parse a path
 struct path_root *pathparser_parse(const char *path, const char *current_directory_path)
 {
     int res = 0;

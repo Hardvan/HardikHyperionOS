@@ -11,6 +11,7 @@
 struct filesystem *filesystems[HARDIKHYPERIONOS_MAX_FILESYSTEMS];
 struct file_descriptor *file_descriptors[HARDIKHYPERIONOS_MAX_FILE_DESCRIPTORS];
 
+// Get a free file descriptor
 static struct filesystem **fs_get_free_filesystem()
 {
     int i = 0;
@@ -25,6 +26,7 @@ static struct filesystem **fs_get_free_filesystem()
     return 0;
 }
 
+// Insert a filesystem
 void fs_insert_filesystem(struct filesystem *filesystem)
 {
     struct filesystem **fs;
@@ -63,6 +65,7 @@ static void file_free_descriptor(struct file_descriptor *desc)
     kfree(desc);
 }
 
+// Get a free file descriptor
 static int file_new_descriptor(struct file_descriptor **desc_out)
 {
     int res = -ENOMEM;
@@ -128,6 +131,7 @@ FILE_MODE file_get_mode_by_string(const char *str)
     return mode;
 }
 
+// Open a file
 int fopen(const char *filename, const char *mode_str)
 {
     int res = 0;
@@ -224,6 +228,7 @@ out:
     return res;
 }
 
+// Read from a file
 int fread(void *ptr, uint32_t size, uint32_t nmemb, int fd)
 {
     int res = 0;
@@ -247,6 +252,7 @@ out:
     return res;
 }
 
+// Close a file
 int fclose(int fd)
 {
     int res = 0;

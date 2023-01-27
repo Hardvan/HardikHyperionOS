@@ -3,6 +3,7 @@
 #include "config.h"
 #include <stdbool.h>
 
+// Create a new disk streamer
 struct disk_stream *diskstreamer_new(int disk_id)
 {
     struct disk *disk = disk_get(disk_id);
@@ -16,12 +17,14 @@ struct disk_stream *diskstreamer_new(int disk_id)
     return streamer;
 }
 
+// Seek to a position
 int diskstreamer_seek(struct disk_stream *stream, int pos)
 {
     stream->pos = pos;
     return 0;
 }
 
+// Read from a stream
 int diskstreamer_read(struct disk_stream *stream, void *out, int total)
 {
     int sector = stream->pos / HARDIKHYPERIONOS_SECTOR_SIZE;
@@ -55,6 +58,7 @@ out:
     return res;
 }
 
+// Close a stream
 void diskstreamer_close(struct disk_stream *stream)
 {
     kfree(stream);
