@@ -137,7 +137,15 @@ void kernel_main()
     // Initialize the terminal
     terminal_initialize();
 
-    // print("Hello, World!\nThis is written in C!");
+    // ? Testing the terminal
+    print("HardikHyperionOS v0.0.1\n\n");
+    print("Testing the terminal:\n");
+    print("Hello, World!\nThis is written in C!\n\n");
+
+    // Wait for a bit
+    for (int i = 0; i < 100000; i++)
+    {
+    }
 
     // Initialize the GDT
     memset(gdt_real, 0x00, sizeof(gdt_real));
@@ -181,6 +189,25 @@ void kernel_main()
     // Initialize all the system keyboards
     keyboard_init();
 
+    // ? Open hello.txt using fopen, fread
+    print("Testing fopen and fread:\n");
+    int fd = fopen("0:/hello.txt", "r");
+    if (fd)
+    {
+        print("hello.txt opened successfully!\n");
+
+        print("Displaying contents of hello.txt:\n");
+        char buf[36];
+        fread(buf, 35, 1, fd);
+        buf[35] = 0x00;
+        print(buf);
+    }
+    print("\n\n");
+
+    // ? Injecting arguments and showcasing multithreading
+    // ? The first argument is "Testing!" and the second is "Abc!"
+    // ? blank.elf is common to both processes
+    // Load the first process
     struct process *process = 0;
     int res = process_load_switch("0:/blank.elf", &process);
     if (res != HARDIKHYPERIONOS_ALL_OK)
@@ -188,18 +215,20 @@ void kernel_main()
         panic("Failed to load blank.elf\n");
     }
 
+    // First Argument ("Testing!") is injected into the first process
     struct command_argument argument;
     strcpy(argument.argument, "Testing!");
     argument.next = 0x00;
-
     process_inject_arguments(process, &argument);
 
+    // Load the second process
     res = process_load_switch("0:/blank.elf", &process);
     if (res != HARDIKHYPERIONOS_ALL_OK)
     {
         panic("Failed to load blank.elf\n");
     }
 
+    // Second Argument ("Abc!") is injected into the second process
     strcpy(argument.argument, "Abc!");
     argument.next = 0x00;
     process_inject_arguments(process, &argument);

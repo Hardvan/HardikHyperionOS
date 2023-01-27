@@ -5,10 +5,11 @@
 
 int main(int argc, char **argv)
 {
-    while (1)
+    // Display the argument 50 times
+    for (int a = 0; a < 50; a++)
     {
         print(argv[0]);
-        for (int i = 0; i < 100000; i++)
+        for (int i = 0; i < 100000; i++) // Delay
         {
         }
     }
