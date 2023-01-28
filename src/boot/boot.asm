@@ -1,3 +1,7 @@
+;   This is a x86 assembly code that creates a bootable image of a FAT16 file system.
+;   It starts by setting the code and data segments using the Global Descriptor Table (GDT)
+;   and sets the stack pointer to 0x7c00.
+
 ORG 0x7c00
 BITS 16
 

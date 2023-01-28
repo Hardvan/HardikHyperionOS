@@ -1,3 +1,36 @@
+/*
+    ? tolower:
+    * Converts a character to lower case
+
+    ? strlen:
+    * Returns the length of a string
+
+    ? strnlen:
+    * Returns the length of a string with a maximum length
+
+    ? strnlen_terminator:
+    * Returns the length of a string with a maximum length and a terminator
+
+    ? istrncmp:
+    * Compares two strings upto a maximum length (case insensitive)
+
+    ? strncmp:
+    * Compares two strings upto a maximum length (case sensitive)
+
+    ? strcpy:
+    * Copies a string
+
+    ? strncpy:
+    * Copies a string upto a maximum length
+
+    ? isdigit:
+    * Checks if a character is a digit
+
+    ? tonumericdigit:
+    * Converts a character to a numeric digit
+
+*/
+
 #include "string.h"
 
 char tolower(char c)

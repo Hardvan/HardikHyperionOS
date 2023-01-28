@@ -1,3 +1,26 @@
+/*
+    ? disk_read_sector:
+    * reads a sector from the disk,
+    * using the specified logical block address (lba)
+    * and total number of sectors to read,
+    * and stores the data in the buffer pointed to by buf.
+
+    ? disk_search_and_init:
+    * initializes the disk, by setting the
+    * disk type, sector size, id, and filesystem.
+
+    ? disk_get:
+    * returns a pointer to the disk struct
+    * based on the index provided,
+    * if index is not zero, it will return NULL.
+
+    ? disk_read_block:
+    * reads a block from the disk, using the
+    * disk struct pointer, logical block address (lba)
+    * and total number of block to read,
+    * and stores the data in the buffer pointed to by buf.
+*/
+
 #include "disk.h"
 #include "io/io.h"
 #include "memory/memory.h"

@@ -1,3 +1,25 @@
+/*
+    ? memset:
+    * This function sets a block of memory to a specified value.
+    * This function takes three arguments:
+        * a pointer to the memory to be set
+        * the value to set it to
+        * the size of the block of memory.
+
+    ? memcmp:
+    * This function compares two blocks of memory,
+    * and returns 0 if they are equal,
+    * 1 if the first is greater than the second,
+    * and -1 if the second is greater than the first.
+
+    ? memcpy:
+    * This function copies a block of memory from one location to another.
+    * This function takes three arguments:
+        * a pointer to the destination memory,
+        * a pointer to the source memory,
+        * the size of the block of memory to be copied.
+*/
+
 #include "memory.h"
 
 // Sets the first size bytes of the block of memory pointed by ptr to the specified value (interpreted as an unsigned char)

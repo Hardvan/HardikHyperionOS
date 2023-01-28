@@ -1,3 +1,10 @@
+/*
+    ? c_start:
+    * This code is the entry point for a program running on the Hardik Hyperion OS.
+    * The function retrieves the arguments passed to the program
+    * and then calls the main function.
+*/
+
 #include "hardikhyperionos.h"
 
 extern int main(int argc, char **argv);

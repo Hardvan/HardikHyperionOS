@@ -1,3 +1,14 @@
+/*
+    ? encodeGdtEntry:
+    * Encodes a GDT entry by taking in a pointer to the target memory location
+    * and a source GDT entry as struct gdt_structured
+
+    ? gdt_structured_to_gdt:
+    * Converts a structured GDT to a GDT by taking in
+    * a pointer to the GDT, a pointer to the structured GDT,
+    * and the total number of entries
+*/
+
 #include "gdt.h"
 #include "kernel.h"
 

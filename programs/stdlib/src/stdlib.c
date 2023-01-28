@@ -1,3 +1,14 @@
+/*
+    ? itoa:
+    * Converts the integer i into a character string.
+
+    ? malloc:
+    * Allocate memory.
+
+    ? free:
+    * Free memory.
+*/
+
 #include "stdlib.h"
 #include "hardikhyperionos.h"
 

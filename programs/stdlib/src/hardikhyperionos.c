@@ -1,3 +1,25 @@
+/*
+    ? hardikhyperionos_parse_command:
+    * This function takes in a command string and a maximum length,
+    * and it returns a linked list of arguments.
+    * It tokenizes the command string using spaces as delimiters
+    * and creates a new struct for each token.
+
+    ? hardikhyperionos_getkeyblock:
+    * This function blocks until a key is pressed
+    * and then it returns the key's value.
+
+    ? hardikhyperionos_terminal_readline:
+    * This function reads a line of input from the terminal,
+    * with the option to output the characters as they are typed.
+    * The input is stored in an output buffer
+    * and the function returns when the user presses the Enter key.
+
+    ? hardikhyperionos_system_run:
+    * This function takes a command string, parses it into arguments,
+    * and then runs the command using the hardikhyperionos_system function.
+*/
+
 #include "hardikhyperionos.h"
 #include "string.h"
 
@@ -56,6 +78,7 @@ int hardikhyperionos_getkeyblock()
     {
         val = hardikhyperionos_getkey();
     } while (val == 0);
+
     return val;
 }
 

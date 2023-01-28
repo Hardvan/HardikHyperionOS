@@ -1,3 +1,5 @@
+// ? Program that acts as a shell for the OS
+
 #include "shell.h"
 #include "stdio.h"
 #include "stdlib.h"

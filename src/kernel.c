@@ -1,3 +1,41 @@
+/*
+    ? terminal_make_char:
+    * takes a character and a color and returns a 16-bit value.
+
+    ? terminal_putchar:
+    * takes a character, color, and x, y coordinates and puts it on the screen.
+
+    ? terminal_backspace:
+    * removes the last character that was printed on the screen.
+
+    ? terminal_writechar:
+    * takes a character and a color and writes it on the screen,
+    * keeps track of the current row and column
+
+    ?terminal_initialize:
+    * clears the screen
+
+    ? print:
+    * takes a string as an input and prints it on the screen
+
+    ? panic:
+    * takes a message as an input and prints it on the screen, and the program enters an infinite loop
+
+    ? kernel_page:
+    * sets up the paging for kernel
+
+    ? kernel_main:
+    * the kernel main function,
+    * it initializes the terminal,
+    * prints a message on the screen,
+    * waits for a bit,
+    * initializes the GDT, loads the GDT,
+    * initializes the heap, initializes the filesystems,
+    * searches and initializes the disks,
+    * initializes the IDT, sets up the task switching,
+    * and enters the user mode.
+*/
+
 #include "kernel.h"
 #include <stdint.h>
 #include <stddef.h>

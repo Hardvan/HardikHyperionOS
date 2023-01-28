@@ -1,3 +1,37 @@
+/*
+    ? fopen:
+    * a function that opens a file with a given filename and mode.
+    * It first parses the filename to extract the root path and drive number,
+    * and then checks if the corresponding disk exists.
+    * It then resolves the filesystem
+    * and calls the filesystem's open function to open the file,
+    * creating a new file descriptor and returning its index.
+    * If any errors occur, it returns a negative error code.
+
+    ? fstat:
+    * is a function that takes in a file descriptor (fd)
+    * and a pointer to a struct file_stat as arguments.
+    * It retrieves a file's status information, such as its size, permissions, and timestamps,
+    * and stores it in the struct file_stat pointed to by the second argument.
+
+    ? fseek:
+    * is a function that takes in a file descriptor (fd), an offset, and a FILE_SEEK_MODE as arguments.
+    * It changes the current position in the file referenced by the file descriptor.
+
+    ? fread:
+    * is a function that takes in a pointer to a buffer ptr, a size,
+    * a nmemb and an integer file descriptor as arguments.
+    * It reads nmemb number of blocks of size bytes from the file referenced by the file descriptor
+    * and stores them in the buffer pointed to by ptr.
+
+    ? fclose:
+    * is a function that takes in a file descriptor as its argument.
+    * It closes the file referenced by the file descriptor
+    * and releases any resources associated with it.
+    * It returns 0 if the file is closed successfully,
+    * else it returns -EIO.
+*/
+
 #include "file.h"
 #include "config.h"
 #include "memory/memory.h"

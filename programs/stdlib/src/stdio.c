@@ -1,3 +1,11 @@
+/*
+    ? putchar:
+    * Used to display a character on the screen.
+
+    ? printf:
+    * Used to print a formatted string.
+*/
+
 #include "stdio.h"
 #include "hardikhyperionos.h"
 #include "stdlib.h"

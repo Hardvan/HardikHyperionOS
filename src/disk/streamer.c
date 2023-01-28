@@ -1,3 +1,28 @@
+/*
+    ? diskstreamer_new:
+    * creates a new disk streamer,
+    * takes in an integer 'disk_id' as input
+    * and returns a pointer to a newly created 'struct disk_stream'.
+
+    ? diskstreamer_seek:
+    * seeks to a specific position,
+    * takes in a pointer to a 'struct disk_stream'
+    * and an integer 'pos' as input
+    * and returns an integer indicating the status of the operation.
+
+    ? diskstreamer_read:
+    * reads a specified number of bytes from the stream,
+    * takes in a pointer to a 'struct disk_stream',
+    * a pointer 'out' to the buffer where the read data will be stored
+    * and an integer 'total' indicating the number of bytes to be read
+    * and returns an integer indicating the status of the operation.
+
+    ?diskstreamer_close:
+    * closes the stream by freeing the memory
+    * allocated for the 'struct disk_stream'
+    * and takes in a pointer to the 'struct disk_stream' as input.
+*/
+
 #include "streamer.h"
 #include "memory/heap/kheap.h"
 #include "config.h"

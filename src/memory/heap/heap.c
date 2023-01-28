@@ -1,3 +1,47 @@
+/*
+    ? heap_validate_table:
+    * takes in a pointer to a heap table, a pointer to the end of heap and a heap_table struct
+    * checks if the total number of blocks in the table is equal to the size of memory space divided by the block size
+    * returns 0 if the table is valid, -EINVARG otherwise
+
+    ? heap_validate_alignment:
+    * takes in a pointer to a heap
+    * checks if the pointer is aligned to the block size
+    * returns true if aligned, false otherwise
+
+    ? heap_create:
+    * takes in a pointer to a heap struct, a pointer to the start of the heap,
+    * a pointer to the end of the heap, and a pointer to a heap table struct
+    * if the table is valid,
+    * it initializes the table by setting all entries to HEAP_BLOCK_TABLE_ENTRY_FREE
+
+    ? heap_align_value_to_upper:
+    * takes in an uint32_t value
+    * aligns the value to the block size by
+    * adding block size to the value if its not already aligned
+
+    ? heap_get_entry_type:
+    * takes in a HEAP_BLOCK_TABLE_ENTRY
+    * returns the type of the entry by masking the lower 4 bits
+
+    ? heap_get_start_block:
+    * takes in a pointer to a heap struct and a uint32_t total number of blocks
+    * traverses the heap table and finds the first continuous free blocks that are
+    * equal to the total number of blocks requested
+    * returns the starting block of the free memory space, -ENOMEM if not enough memory
+
+
+    ? heap_block_to_address:
+    * takes in a pointer to a heap struct and an int block number
+    * returns the starting address of the block
+
+    ? heap_mark_blocks_taken:
+
+    * takes in a pointer to a heap struct, int starting block number and int total number of blocks
+    * marks the blocks in the heap table as taken by setting the entries to HEAP_BLOCK_TABLE_ENTRY_TAKEN
+    * sets the first block as HEAP_BLOCK_IS_FIRST, and sets the HAS_NEXT bit if there are more blocks\
+*/
+
 #include "heap.h"
 #include "kernel.h"
 #include <stdbool.h>
